@@ -105,13 +105,23 @@ with st.sidebar:
         )
 
         st.divider()
-        st.subheader("2. Bobot Kriteria (1–10)")
-        st.info("Jumlah bobot akan dinormalisasi secara otomatis sehingga totalnya = 1.")
-        w_rev = st.slider("C1 – Revenue (Keuntungan)",       1, 10, 5)
-        w_qty = st.slider("C2 – Qty Terjual (Volume)",       1, 10, 5)
-        w_ret = st.slider("C3 – Rasio Retur (Risiko)",       1, 10, 3)
+        st.subheader("2. Bobot Kriteria")
+        st.info("**1** = Rendah  ·  **2** = Sedang  ·  **3** = Tinggi\n\nBobot akan dinormalisasi otomatis sehingga totalnya = 1.")
+        w_rev = st.slider("C1 – Revenue (Keuntungan)",       1, 3, 2)
+        w_qty = st.slider("C2 – Qty Terjual (Volume)",       1, 3, 2)
+        w_ret = st.slider("C3 – Rasio Retur (Risiko)",       1, 3, 1)
 
+        # Label bobot
         w_total = w_rev + w_qty + w_ret
+        bobot_label = {1: "🔵 Rendah", 2: "🟡 Sedang", 3: "🔴 Tinggi"}
+        st.markdown(f"""
+        <div style="background:#f0f4ff; border-radius:8px; padding:0.6rem 1rem; font-size:0.82rem; color:#444; margin-bottom:0.5rem;">
+        &nbsp;&nbsp;C1 → <b>{bobot_label[w_rev]}</b> &nbsp;|&nbsp;
+        C2 → <b>{bobot_label[w_qty]}</b> &nbsp;|&nbsp;
+        C3 → <b>{bobot_label[w_ret]}</b>
+        </div>
+        """, unsafe_allow_html=True)
+
         wn_rev = w_rev / w_total
         wn_qty = w_qty / w_total
         wn_ret = w_ret / w_total
@@ -438,4 +448,3 @@ else:
                 <p>{desc}</p>
             </div>
             """, unsafe_allow_html=True)
-                
